@@ -7,19 +7,18 @@ from discord_webhook import DiscordWebhook
 with open('config.json', 'r') as file:
     config = json.load(file)
 
-#Wenn du bestimmte Bibliotheken verwenden möchtest musst du sie mit subprosses installieren.
-with open('promt.json', 'r') as file:
-    promt = json.load(file)
+with open('prompt.json', 'r') as file:
+    prompt = json.load(file)
 
-client = genai.Client(api_key=config[0])
+client = genai.Client(api_key=config["geminiApiKey"])
 
 ai_model = "gemini-2.5-flash"
 
 
-def ai(ai_model, promt):
+def ai(ai_model, prompt):
     response = client.models.generate_content(
         model=ai_model,
-        contents=promt
+        contents=prompt
     )
 
     return response
@@ -44,13 +43,13 @@ def execute_code(code):
 if __name__ ==  "__main__":
     counter = 0
     while True:
-        response = str(ai(ai_model,promt))
+        response = str(ai(ai_model,prompt))
         code = extract_code(response)
         console_output = execute_code(code)
 
-        #log in discord webhook
-        webhook = DiscordWebhook(url=config[1], content=str(counter))
-        webhook.add_file(file=code, filename="code")
-        webhook.add_file(file=console_output, filename="output")
+        # log in discord webhook
+        webhook = DiscordWebhook(url=config["discordWebHook"], content=str(counter))
+        webhook.add_file(file=code, filename="code.py")
+        webhook.add_file(file=console_output, filename="output.log")
         webhook.execute()
         counter += 1
