@@ -11,7 +11,7 @@ with open('config.json', 'r') as file:
 with open('prompt.json', 'r') as file:
     prompt = json.load(file)
 
-client = genai.Client(api_key=config[0])
+client = genai.Client(api_key=config["geminiApiKey"])
 
 ai_model = "gemini-2.5-flash"
 
@@ -49,7 +49,7 @@ if __name__ ==  "__main__":
         console_output = execute_code(code)
 
         # log in discord webhook
-        webhook = DiscordWebhook(url=config[1], content=str(counter))
+        webhook = DiscordWebhook(url=config["discordWebHook"], content=str(counter))
         webhook.add_file(file=code, filename="code")
         webhook.add_file(file=console_output, filename="output")
         webhook.execute()
