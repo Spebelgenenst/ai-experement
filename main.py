@@ -28,7 +28,7 @@ def execute_code(code):
     output = StringIO()
     sys.stdout = output
     try:
-        exec(extract_code(response))
+        exec(extract_code(code))
         error = None
     except Exception as e:
         error = e
