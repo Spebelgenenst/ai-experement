@@ -13,10 +13,10 @@ If the AI can code a slightly better version of itself, and the new AI does the 
    ```
 
 **Setup**
-1. Rename the _example_config.json_ file to _config.json_.
+1. Rename the _template-credentials.json_ file to _credentials.json_.
 2. Go to [google ai studio](aistudio.google.com) and sign in
 3. grab your gemini key
-4. paste it in the _config.json_ file
+4. paste it in the _credentials.json_ file
 5. create a [discord webhook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
-6. paste it in the _config.json_ file
+6. paste it in the _credentials.json_ file
 7. run the program and hope your pc doesn't explote :3
