@@ -7,13 +7,9 @@ from discord_webhook import DiscordWebhook
 with open('config.json', 'r') as file:
     config = json.load(file)
 
-with open('prompt.json', 'r') as file:
-    prompt = json.load(file)
-
 client = genai.Client(api_key=config["geminiApiKey"])
 
 ai_model = "gemini-2.5-flash"
-
 
 def ai(ai_model, prompt):
     response = client.models.generate_content(
@@ -34,22 +30,28 @@ def execute_code(code):
     try:
         exec(extract_code(response))
         error = None
-    except:
-        error = "error"
-    sys.stdout = sys.__stdout__
+    except Exception as e:
+        error = e
+    sys.stdout = sys.__stdout__, error
 
     return output.getvalue()
 
 if __name__ ==  "__main__":
     counter = 0
+    prompt = config["prompt"]
     while True:
         response = str(ai(ai_model,prompt))
         code = extract_code(response)
-        console_output = execute_code(code)
+        console_output, error = execute_code(code)
+
+        prompt = f"Console Output: {console_output} \n Error: {error}"
 
         # log in discord webhook
         webhook = DiscordWebhook(url=config["discordWebHook"], content=str(counter))
         webhook.add_file(file=code, filename="code.py")
         webhook.add_file(file=console_output, filename="output.log")
+        if error:
+            webhook.add_file(file=error, filename="error.log")
+
         webhook.execute()
         counter += 1
