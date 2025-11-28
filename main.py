@@ -44,7 +44,7 @@ if __name__ ==  "__main__":
     prompt = config["prompt"]
     while True:
         response = str(ai(ai_model,prompt))
-        code = extract_code(response)
+        code = extract_code(response.text)
         console_output, error = execute_code(code)
 
         prompt = f"Console Output: {console_output} \n Error: {error}"
