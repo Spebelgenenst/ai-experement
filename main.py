@@ -24,8 +24,8 @@ def ai(ai_model, prompt):
 
 def extract_code(response):
     try:
-        extract = response[response.find("```python")+10:]
-        extract = extract[:extract.find("```")]
+        code = response[response.find("```python")+10:]
+        code = extract[:extract.find("```")]
     except:
         return None
     
@@ -34,7 +34,7 @@ def extract_code(response):
     print("---------code----------")
     print(code)
 
-    return extract
+    return code
 
 def execute_code(code):
     output = StringIO()
