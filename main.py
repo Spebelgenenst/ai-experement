@@ -45,13 +45,18 @@ if __name__ ==  "__main__":
     counter = 0
     prompt_feedback = "None"
     while True:
+        print("waiting for ai to respond...")
         response = ai(ai_model, prompt + prompt_feedback).text
         if not response:
             continue
+        
+        print("executing code...")
+
 
         code = extract_code(response)
         if not code:
             prompt_feedback = "No python code found, please write python code!"
+            print("error x_X: no code found")
 
             webhook = DiscordWebhook(url=credentials["discordWebHook"], content=str(counter)+". response without python code")
             webhook.add_file(file=response, filename="response.log")
@@ -68,6 +73,8 @@ if __name__ ==  "__main__":
         console_output, error = execute_code(code)
 
         # log in discord webhook
+        print(f"last Console Output: {console_output}")
+        
         webhook = DiscordWebhook(url=credentials["discordWebHook"], content=str(counter)+". output")
         webhook.add_file(file=console_output, filename=f"output{counter}.log")
         if error:
@@ -75,7 +82,6 @@ if __name__ ==  "__main__":
             webhook.content = str(counter)+". output+error"
             print(f"error: {error}")
 
-        print(f"last Console Output: {console_output}")
 
         webhook.execute()
 
