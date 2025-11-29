@@ -1,10 +1,10 @@
 This is just a silly project to have some fun. In theory the ai could take over the entire world or just delete your hard drive... who knows...
 
-If the AI can code a slightly better version of itself, and the new AI does the same. This prosses repeated over and over, could lead to an explosion in AI smartness. This is just one scenario...
+If the AI can code a slightly better version of itself, and the new AI does the same. This process repeated over and over, could lead to an explosion in AI smartness. This is just one scenario...
 
 **Install**
-1. download the latest [release](https://github.com/Spebelgenenst/ai-experement/releases) or clone the reposetory
-2. make shure you have all depentensies installed (google genai, discord_webhook, python-io)
+1. download the latest [release](https://github.com/Spebelgenenst/ai-experiment/releases) or clone the repository
+2. make sure you have all dependencies installed (google genai, discord_webhook, python-io)
    install:
    ```
    pip install discord-webhook
