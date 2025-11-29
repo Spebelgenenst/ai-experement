@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:ai-experiment}",
+            "name": "Debug ai-experiment",
+            "target": "ai-experiment",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ai-experiment"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:ai-experiment}",
+            "name": "Release ai-experiment",
+            "target": "ai-experiment",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ai-experiment"
+        }
+    ]
+}
