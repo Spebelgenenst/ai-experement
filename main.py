@@ -87,6 +87,7 @@ if __name__ ==  "__main__":
         if error:
             webhook.add_file(file=str(error), filename=f"error_{counter}.log")
             embed.title = "output & errors"
+            embed.color = "ff0000"
             print(f"error: {error}")
 
         webhook.add_embed(embed)
