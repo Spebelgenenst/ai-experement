@@ -38,13 +38,13 @@ def extract_code(response):
     return code
 
 def execute_code(code):
+    error = None
     output = StringIO()
     sys.stdout = output
     try:
         exec(code)
-        error = None
     except Exception as e:
-        error = e.with_traceback
+        error = e
     sys.stdout = sys.__stdout__
 
     return output.getvalue(), error
