@@ -36,7 +36,7 @@ def execute_code(code):
     with open("code.py", "w") as f:
         f.write(code)
 
-    console_output = subprocess.check_output(["python3","code.py"])
+    console_output = subprocess.check_output(["python3","code.py"], text=True)
     print(console_output)
 
     return console_output
