@@ -28,7 +28,7 @@ def extract_code(response):
         code = response[start+10:]
         code = code[:code.find("```")]
     else:
-        return "print(\"no python code found\")"
+        return None
     
     print("---------raw-----------")
     print(response)
@@ -58,6 +58,10 @@ if __name__ ==  "__main__":
             continue
 
         code = extract_code(response.text)
+        if not code:
+            prompt_feedback = "No python code found, please write python code!"
+            code = response
+            continue
 
         webhook = DiscordWebhook(url=credentials["discordWebHook"], content=str(counter)+". code")
         webhook.add_file(file=code, filename="code.py")
