@@ -38,8 +38,6 @@ def execute_code(code):
 
     output = subprocess.run(["python3","code.py"], text=True, capture_output=True)
 
-    print(output)
-
     return output.stdout, output.stderr
 
 if __name__ ==  "__main__":
