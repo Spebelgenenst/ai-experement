@@ -7,7 +7,6 @@ If the AI can code a slightly better version of itself, and the new AI does the 
 2. make shure you have all depentensies installed (google genai, discord_webhook, python-io)
    install:
    ```
-   pip install Python-IO
    pip install discord-webhook
    pip install -q -U google-genai
    ```
