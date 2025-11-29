@@ -1,7 +1,9 @@
 import json
 from google import genai
+from io import StringIO
+import sys
 from discord_webhook import DiscordWebhook
-import subprocess
+import traceback
 
 with open('prompt.md', 'r') as file:
     prompt = file.read()
@@ -28,18 +30,28 @@ def extract_code(response):
         code = code[:code.find("```")]
     else:
         return None
+    
+    #print("---------raw-----------")
+    #print(response)
+    #print("---------code----------")
+    #print(code)
 
     return code
 
 def execute_code(code):
-    
-    with open("code.py", "w") as f:
-        f.write(code)
+    error = None
+    custom_globals = {"__builtins__": __builtins__}
+    custom_locals = {}
+    output = StringIO()
+    sys.stdout = output
 
-    console_output = subprocess.check_output(["python3","code.py"])
-    print(console_output)
+    try:
+        exec(code, custom_globals, custom_locals)
+    except Exception:
+        error = traceback.format_exc()
+    sys.stdout = sys.__stdout__
 
-    return console_output
+    return output.getvalue(), error
 
 if __name__ ==  "__main__":
     counter = 0
@@ -64,14 +76,20 @@ if __name__ ==  "__main__":
 
         webhook.execute()
 
-        console_output = execute_code(code)
+        console_output, error = execute_code(code)
 
+        print("---------------------------")
+        print(console_output)
 
         # log in discord webhook
         webhook = DiscordWebhook(url=credentials["discordWebHook"], content=str(counter)+". output")
         webhook.add_file(file=console_output, filename="output.log")
+        if error:
+            print(error)
+            webhook.add_file(file=str(error), filename="error.log")
+            webhook.content = str(counter)+". output+error"
 
         webhook.execute()
 
-        prompt_feedback = f"last Console Output: {console_output}"
+        prompt_feedback = f"last Console Output: {console_output} \n last Error: {error}"
         counter += 1
